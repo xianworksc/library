@@ -1,0 +1,10 @@
+{{> head}}
+<body class="bg-gray-50">
+  <div class="text-center mt-20">
+    <h2 class="text-2xl">Dashboard</h2>
+    <p class="mt-4">Welcome to your dashboard!</p>
+    <div class="mt-6">
+      <a href="/logout" class="text-red-600 font-medium">Logout</a>
+    </div>
+  </div>
+{{> footer }}

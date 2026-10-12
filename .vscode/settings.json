@@ -1,0 +1,41 @@
+{
+  "files.associations": {
+    "*.xian": "html"
+  },
+  "files.exclude": {
+    "**/.vscode": true
+  },
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false,
+    "javascript": false,
+    "typescript": false,
+    "handlebars": false,
+    "html": false
+  },
+  "github.copilot.chat.enabled": false,
+  "chat.editor.enabled": false,
+  "inlineChat.enabled": false,
+  "editor.inlineChat.enabled": false,
+  "workbench.panel.chat.view.enabled": false,
+  "chat.agent.enabled": false,
+  "chat.explore.enabled": false,
+  "chat.ask.enabled": false,
+  "chat.plan.enabled": false,
+  "lightbulb.enabled": "off",
+  "editor.inlineSuggest.enabled": false,
+  "editor.suggest.showWords": false,
+  "editor.suggest.showSnippets": false,
+  "editor.wordBasedSuggestions": "off",
+  "editor.quickSuggestions": {
+    "other": "off",
+    "comments": "off",
+    "strings": "off"
+  },
+  "editor.parameterHints.enabled": false,
+  "editor.suggestOnTriggerCharacters": false,
+  "editor.acceptSuggestionOnEnter": "off",
+  "terminal.integrated.suggest.enabled": false
+}

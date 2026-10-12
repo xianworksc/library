@@ -1,0 +1,212 @@
+{{> head }}
+<body class="bg-gray-50">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-center mt-10">Welcome to XianFire 🔥</h1>
+    <p class="text-center mt-4">Home Page</p>
+    <a href="/add">add new</a>
+
+  </div>
+     <table>
+        <tr>
+            <td>Name</td>
+            <td>category</td>
+            <td>author</td>
+            <td>publisher</td>
+            <td>price</td>
+            <td>pub_year</td>
+            <td>action</td>
+        </tr>
+        <!-- dito po ang mga pogi -->
+         {{#each data}}
+        <tr>
+            <td>{{Name}}</td>
+            <td>{{category}}</td>
+            <td>{{author}}</td>
+            <td>{{publisher}}</td>
+            <td>{{price}}</td>
+            <td>{{pub_year}}</td>
+            <td>    <button
+            type="button"
+            onclick="editBook(this)"
+            data-id="{{id}}"
+            data-name="{{Name}}"
+            data-category="{{category}}"
+            data-author="{{author}}"
+            data-publisher="{{publisher}}"
+            data-price="{{price}}"
+            data-pub-year="{{pub_year}}"
+            class="bg-blue-500 text-white px-3 py-1 rounded">
+            Edit
+        </button>|
+        <button
+            type="button"
+            onclick="openDeleteModal(this)"
+            data-id="{{id}}"
+            data-name="{{Name}}"
+            class="bg-red-600 text-white px-4 py-2 rounded-lg">
+            Delete Book
+        </button>
+</td>
+        </tr>
+        {{/each}}
+        <!-- at natapos na -->
+    </table>
+    
+<div id="deleteModal"
+     class="hidden fixed inset-0 z-[60] bg-black/50
+            items-center justify-center p-4">
+
+    <div class="bg-white w-full max-w-sm rounded-xl p-6 shadow-xl">
+
+        <div class="text-center">
+            <div class="mx-auto mb-4 flex h-14 w-14
+                        items-center justify-center rounded-full bg-red-100">
+                <span class="text-3xl text-red-600">!</span>
+            </div>
+
+            <h2 class="text-xl font-bold text-gray-800">
+                Delete Book?
+            </h2>
+
+            <p class="text-gray-600 mt-2">
+                Are you sure you want to delete
+                <strong id="deleteBookName"></strong>?
+                This action cannot be undone.
+            </p>
+        </div>
+
+        <div class="flex justify-center gap-3 mt-6">
+            <button type="button"
+                    onclick="closeDeleteModal()"
+                    class="px-4 py-2 rounded-lg bg-gray-200
+                           hover:bg-gray-300">
+                Cancel
+            </button>
+
+            <button type="button"
+                    onclick="confirmDeleteBook()"
+                    class="px-4 py-2 rounded-lg bg-red-600
+                           text-white hover:bg-red-700">
+                Yes, Delete
+            </button>
+        </div>
+    </div>
+</div>
+
+    
+<div id="editModal"
+     class="hidden fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+
+    <div class="bg-white w-full max-w-lg rounded-lg p-6">
+        <h2 class="text-xl font-bold mb-4">Edit Book</h2>
+
+        <form id="editForm" method="POST">
+            <input type="hidden" id="editId">
+
+            <label class="block mb-1">Book Name</label>
+            <input id="editName" name="Name" required
+                   class="border p-2 w-full mb-3 rounded">
+
+            <label class="block mb-1">Category</label>
+            <input id="editCategory" name="category" required
+                   class="border p-2 w-full mb-3 rounded">
+
+            <label class="block mb-1">Author</label>
+            <input id="editAuthor" name="author" required
+                   class="border p-2 w-full mb-3 rounded">
+
+            <label class="block mb-1">Publisher</label>
+            <input id="editPublisher" name="publisher" required
+                   class="border p-2 w-full mb-3 rounded">
+
+            <label class="block mb-1">Price</label>
+            <input id="editPrice" name="price" type="number"
+                   step="0.01" required
+                   class="border p-2 w-full mb-3 rounded">
+
+            <label class="block mb-1">Publication Year</label>
+            <input id="editPubYear" name="pub_year" type="number"
+                   required class="border p-2 w-full mb-4 rounded">
+
+            <div class="flex justify-end gap-2">
+                <button type="button" onclick="closeEdit()"
+                        class="bg-gray-300 px-4 py-2 rounded">
+                    Cancel
+                </button>
+
+                <button type="submit"
+                        class="bg-blue-600 text-white px-4 py-2 rounded">
+                    Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    
+let selectedBookId = null;
+
+function editBook(button) {
+    const id = button.dataset.id;
+
+    document.getElementById('editId').value = id;
+    document.getElementById('editName').value = button.dataset.name;
+    document.getElementById('editCategory').value = button.dataset.category;
+    document.getElementById('editAuthor').value = button.dataset.author;
+    document.getElementById('editPublisher').value = button.dataset.publisher;
+    document.getElementById('editPrice').value = button.dataset.price;
+    document.getElementById('editPubYear').value = button.dataset.pubYear;
+
+    document.getElementById('editForm').action =
+        '/books/' + encodeURIComponent(id);
+
+    document.getElementById('editModal').classList.remove('hidden');
+}
+
+function closeEdit() {
+    document.getElementById('editModal').classList.add('hidden');
+}
+
+// OPEN DELETE CONFIRMATION MODAL
+function openDeleteModal(button) {
+    selectedBookId = button.dataset.id;
+
+    document.getElementById('deleteBookName').textContent =
+        button.dataset.name;
+
+    const modal = document.getElementById('deleteModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+}
+function closeDeleteModal() {
+    const modal = document.getElementById('deleteModal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    selectedBookId = null;
+}
+async function confirmDeleteBook() {
+    console.log('Delete clicked. Book ID:', selectedBookId);
+
+    if (!selectedBookId) {
+        alert('No book selected.');
+        return;
+    }
+    try {
+        const response = await fetch(
+            '/books/' + encodeURIComponent(selectedBookId),
+            { method: 'DELETE' }
+        );
+        const result = await response.text();
+        console.log('Status:', response.status);
+        console.log('Response:', result);
+        if (!response.ok) {
+            throw new Error(result || 'Failed to delete book.');
+        }
+        window.location.href = '/';
+    } catch (error) {
+        console.error('Delete error:', error);
+        alert(error.message);
+    }
+}
+</script>
+{{> footer }}

@@ -1,0 +1,17 @@
+{{>head}}
+   <form action="/update", method="POST">
+        <input type="hidden" name="Name" placeholder="Name" value="{{data.id}}">
+        <label for="Name">Name</label>
+        <input type="text" name="Name" placeholder="Name" value="{{data.Name}}">
+        <label for="category">category</label>
+        <input type="text" name="category" placeholder="category" value="{{data.category}}">
+        <label for="author">author</label>
+        <input type="text" name="author" placeholder="author" value="{{data.author}}">
+        <label for="publisher">publisher</label>
+        <input type="text" name="publisher" placeholder="publisher" value="{{data.publisher}}">
+        <label for="price">price</label>
+        <input type="text" name="price" placeholder="price" value="{{data.price}}">
+        <label for="pub_year">pub_year</label>
+        <input type="text" name="pub_year" placeholder="pub_year" value="{{data.pub_year}}">
+        <input type="submit" name="save">
+    </form>
